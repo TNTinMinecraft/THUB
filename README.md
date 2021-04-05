@@ -10,5 +10,6 @@ Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 
 文件夹说明：  
 > arduino_mianban:使用arduino制作的控制面板  
+> > - 3D_model:3D模型文件 
 > > - mianban:arduino主程序  
 > > - README.txt:串口数据定义
