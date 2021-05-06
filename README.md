@@ -1,6 +1,6 @@
-# super_AI
-This is a super AI project with Arduino as its core. And completely open source, you can copy it at home!  
-这是一个超级AI项目，核心使用ARDUINO。并且完全开源，你可以在家复刻他!
+# THUB
+This is a THUB project with Arduino as its core. And completely open source, you can copy it at home!  
+这是一个THUB项目，核心使用ARDUINO。并且完全开源，你可以在家复刻他!
 
 未完工!  
 Unfinished!  
