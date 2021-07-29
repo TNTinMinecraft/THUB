@@ -17,7 +17,7 @@ Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 > arduino_shugui:使用arduino制作的书柜灯  
 > > - shugui:arduino主程序  
 > > - README.txt:串口数据定义
-
+```
 +-- _config.yml
 +-- _drafts
 |   +-- begin-with-the-crazy-ideas.textile
@@ -35,3 +35,4 @@ Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 |   +-- members.yml
 +-- _site
 +-- index.html
+```
