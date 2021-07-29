@@ -13,9 +13,18 @@ Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 |-- THUB
     |-- arduino_mianban //使用arduino制作的控制面板
         |-- 3D_model //3D模型文件
+        |   |-- A.stl
+        |   |-- B.stl
+        |   |-- C.stl
+        |   |-- D.stl
+        |   |-- 控制面板.123dx //主模型
         |-- mianban //arduino主程序
+        |   |-- mianban.ino
         |-- README.txt //串口数据定义
     |-- arduino_shugui //使用arduino制作的书柜灯
         |-- shugui //arduino主程序
+        |   |-- shugui.ino
         |-- README.txt //串口数据定义
+|-- LICENSE
+|-- README.md
 ```
