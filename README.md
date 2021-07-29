@@ -13,5 +13,5 @@ Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 >> - 3D_model:3D模型文件 
 >> - mianban:arduino主程序  
 >> - README.txt:串口数据定义
-> arduino_shugui:使用arduino制作的书柜灯
+>> arduino_shugui:使用arduino制作的书柜灯
 >> - README.txt:串口数据定义
