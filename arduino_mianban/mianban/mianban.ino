@@ -17,7 +17,8 @@ int in4 = 7;    //全黑
 int in5 = 8;    //电脑开关
 int in6 = 9;    //床下灯
 int in7 = 13;   //锁in
-int out3  = 12;   //锁
+int out3 = 12;  //锁
+int out2 = 11;  //data.led
 
 int io1 = 0;
 
