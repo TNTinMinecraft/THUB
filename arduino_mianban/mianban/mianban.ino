@@ -10,6 +10,8 @@ U8GLIB_SH1106_128X64 u8g( U8G_I2C_OPT_NONE );
 String    ID;
 volatile int  error0;
 
+String NAME = "mianban";//设备名称
+
 int in1 = 4;    //密码开关1
 int in2 = 5;    //密码开关2
 int in3 = 6;    //密码开关3
@@ -90,7 +92,7 @@ const uint8_t Clear[]   U8G_PROGMEM = {
 void setup()
 {
   Serial.begin( 9600 );
-  Serial.println( "go_online_mb" );
+  Serial.println( "THUB." + NAME + ".noline" );
   error0 = 0;
   finger.begin( 57600 );
   pinMode( in1, INPUT );
