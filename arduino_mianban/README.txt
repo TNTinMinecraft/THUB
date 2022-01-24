@@ -14,3 +14,8 @@ THUB.mianban.bedroom.qh.0.D
 
 THUB.mianban.bedroom.online.D
 上线
+
+THUB.mianban.bedroom.stop.D
+申请总线
+THUB.mianban.bedroom.fr.D
+释放总线
