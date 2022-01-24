@@ -5,10 +5,12 @@ io说明：
 qh=全黑
 dn=电脑
 xd=床下灯
+
 实例：
-qh.1
+THUB.mianban.bedroom.qh.1.D
 全黑模式开
-qh.0
+THUB.mianban.bedroom.qh.0.D
 全黑模式关
 
-go_online_mb：上线
+THUB.mianban.bedroom.online.D
+上线
