@@ -8,6 +8,66 @@ Unfinished!
 作者主页:[TNTInMinecraft](http://www.tntinminecraft.tech/)  
 Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 ---
+消息格式：   
+```
+上线：
+THUB.mianban.bedroom.noline.D
+ |      |       |      |    |
+协议 设备名称 设备位置 上线 消息尾
+名称
+
+用户输入：
+THUB.mianban.bedroom.qh.1.D
+ |      |       |     | | |
+协议 设备名称 设备位置 按 状 消息尾
+名称                 键 态
+
+传感器：
+THUB.tprhmt.bedroom.c.30.D
+ |     |       |    |  | |
+协议  设备    设备   单 数 消息尾
+名称  名称    位置   位 值
+
+申请总线：
+THUB.mianban.bedroom.stop.D
+ |      |       |     |   |
+协议 设备名称 设备位置 暂停 消息尾
+名称
+
+HUB申请成功：
+THUB.mianban.badroom.ok.D
+ |      |       |     | |
+协议 设备名称 设备位置 成 消息尾
+名称                 功
+
+释放总线：
+THUB.mianban.bedroom.fr.D
+ |      |       |     | |
+协议 设备名称 设备位置 释 消息尾
+名称                 放
+
+总线空闲：
+THUB.hub.not.D
+ |    |   |   |
+协议 设备 空闲 消息尾
+名称 名称
+```
+---
+消息逻辑：
+传感器：当总线空闲时输出    
+if(总线空闲){   
+  print(date);  
+}   
+    
+用户输入：如果有改变 停止传感器输出  
+if(数据改变){   
+  申请暂停总线;   
+  if(申请成功){ 
+    print(date);    
+  } 
+  释放总线; 
+}   
+---
 文件夹说明：  
 ```
 |-- THUB
