@@ -11,6 +11,9 @@ String    ID;
 volatile int  error0;
 
 String NAME = "mianban";//设备名称
+String SITE = "bedroom";//设备位置
+
+/**********定义I/O**********/
 
 int in1 = 4;    //密码开关1
 int in2 = 5;    //密码开关2
@@ -19,7 +22,7 @@ int in4 = 7;    //全黑
 int in5 = 8;    //电脑开关
 int in6 = 9;    //床下灯
 int in7 = 13;   //锁in
-int out3 = 12;  //锁
+int out3 = 12;  //锁led
 int out2 = 11;  //data.led
 
 int io1 = 0;
@@ -38,6 +41,8 @@ SoftwareSerial mySerial( 2, 3 );
 #endif
 
 Adafruit_Fingerprint finger = Adafruit_Fingerprint( &mySerial );
+
+/**********UI**********/
 
 const uint8_t bitmap_1[]   U8G_PROGMEM = {
   0x80, 0x00, 0x00, 0x83, 0x1B, 0x18, 0xA4, 0xA4, 0xA4, 0xD4, 0xA4, 0xBC, 0x94, 0xA4, 0xA0, 0x93,
@@ -92,8 +97,8 @@ const uint8_t Clear[]   U8G_PROGMEM = {
 void setup()
 {
   Serial.begin( 9600 );
-  Serial.println( "THUB." + NAME + ".noline" );
-  error0 = 0;
+  Serial.println( "THUB." + NAME + SITE + ".noline" + ".D" );//上线
+  error0 = 0;//解锁
   finger.begin( 57600 );
   pinMode( in1, INPUT );
   pinMode( in2, INPUT );
@@ -105,7 +110,7 @@ void setup()
   pinMode( out3, OUTPUT );
 
   digitalWrite( out3, LOW );
-
+  /**********加载动画**********/
   for ( int i = 1; i < 95; i = i + 7 )
   {
     u8g.firstPage();
@@ -143,7 +148,7 @@ void loop()
         }
         while ( u8g.nextPage() );
       }
-      getFingerprintID();
+      getFingerprintID();//指纹
       for ( int i = 47; i < 95; i = i + 6 )
       {
         u8g.firstPage();
@@ -158,15 +163,17 @@ void loop()
       io2 = 1;
       io3 = 1;
     }
-    if ( error0 == 1 )
+    if ( error0 == 1 )//指纹通过
     {
-      if ( digitalRead( in1 ) == 1 && (digitalRead( in2 ) == 0 && digitalRead( in3 ) == 1) )
+      if ( digitalRead( in1 ) == 1 && (digitalRead( in2 ) == 0 && digitalRead( in3 ) == 1) )//密码
       {
+        /**********密码通过**********/
         digitalWrite( out3, HIGH );
         ui();
         cp_io();
         io();
       } else {
+        /**********密码未通过**********/
         digitalWrite( out3, LOW );
         u8g.firstPage();
         do
@@ -193,6 +200,7 @@ void loop()
         while ( u8g.nextPage() );
       }
     } else {
+      /**********指纹未通过**********/
       u8g.firstPage();
       do
       {
@@ -213,7 +221,7 @@ void loop()
       io2 = 0;
       io3 = 0;
       error0  = 0;
-      Serial.println( "lock" );
+      //Serial.println( "lock" );
       delay( 1000 );
       u8g.firstPage();
       do
@@ -225,7 +233,7 @@ void loop()
   }
 }
 
-
+/**********绘制函数**********/
 uint8_t ui()
 {
   u8g.firstPage();
@@ -262,32 +270,34 @@ uint8_t ui()
   while ( u8g.nextPage() );
 }
 
-
+/**********I/O函数**********/
 uint8_t io()
 {
   if ( io1 != digitalRead( in4 ) + digitalRead( in6 ) + cpled )
   {
+    Serial.println( "THUB." + NAME + SITE + ".stop" + ".D" );//申请总线
     if ( digitalRead( in4 ) == 1 )
     {
-      Serial.println( "qh.1" );
+      Serial.println( "THUB." + NAME + SITE + ".qh.1" + ".D" );
     } else {
-      Serial.println( "qh.0" );
+      Serial.println( "THUB." + NAME + SITE + ".qh.0" + ".D" );
     }
 
     if ( digitalRead( in6 ) == 1 )
     {
-      Serial.println( "xd.1" );
+      Serial.println( "THUB." + NAME + SITE + ".xd.1" + ".D" );
     } else {
-      Serial.println( "xd.0" );
+      Serial.println( "THUB." + NAME + SITE + ".xd.0" + ".D" );
     }
 
     if ( cpled == 1 )
     {
-      Serial.println( "dn.1" );
+      Serial.println( "THUB." + NAME + SITE + ".dn.1" + ".D" );
     } else {
-      Serial.println( "dn.0" );
+      Serial.println( "THUB." + NAME + SITE + ".dn.0" + ".D" );
     }
     io1 = digitalRead( in4 ) + digitalRead( in6 ) + cpled;
+    Serial.println( "THUB." + NAME + SITE + ".fr" + ".D" );//释放总线
   }
 }
 
@@ -302,7 +312,7 @@ uint8_t cp_io()
   old_cp = cp;
 }
 
-
+/**********指纹检测I/O函数**********/
 uint8_t getFingerprintID()
 {
   uint8_t p = finger.getImage();
