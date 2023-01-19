@@ -56,7 +56,7 @@ THUB.bookcase.bedroom.FF:FF:FF:FF:FF:FF.1,0,1,1,1,1,1,0,1,1,0,1,0,1,1,1
     |-- ESP12-f_bookcase //使用ESP12-f制作的书架灯
         |-- ESP12-f_bookcase //arduino主程序
         |   |-- ESP12-f_bookcase.ino
-        |-- README.txt //MQTT数据定义
+        |-- README.txt
 |-- LICENSE
 |-- README.md
 ```
