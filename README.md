@@ -10,67 +10,34 @@ This is a THUB project with Arduino as its core. And completely open source, you
 作者主页:[TNTInMinecraft](http://www.tntinminecraft.tech/)  
 Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 ---
+从V0.2后，由曾经的使用串口协议传输数据改为使用MQTT协议传输数据，从此不用解决“忙线的问题”  
+---
 消息格式：   
 ```
 上线：
-THUB.mianban.bedroom.noline.D
- |      |       |      |    |
-协议 设备名称 设备位置 上线 消息尾
+THUB.mianban.bedroom.FF:FF:FF:FF:FF:FF.noline
+ |      |       |            |           |
+协议 设备名称 设备位置      MAC地址       上线
 名称
 
-用户输入：
-THUB.mianban.bedroom.qh.1.D
- |      |       |     | | |
-协议 设备名称 设备位置 按 状 消息尾
-名称                 键 态
+设备输入：
+THUB.mianban.bedroom.FF:FF:FF:FF:FF:FF.qh.1
+ |      |       |            |         | |
+协议 设备名称 设备位置      MAC地址      按 状
+名称                                   键 态
 
 传感器：
-THUB.tprhmt.bedroom.c.30.D
- |     |       |    |  | |
-协议  设备    设备   单 数 消息尾
-名称  名称    位置   位 值
+THUB.tprhmt.bedroom.FF:FF:FF:FF:FF:FF.c.30
+ |     |       |            |         |  |
+协议  设备    设备        MAC地址      单 数
+名称  名称    位置                     位 值
 
-申请总线：
-THUB.mianban.bedroom.stop.D
- |      |       |     |   |
-协议 设备名称 设备位置 暂停 消息尾
-名称
+复杂数据传输：
+THUB.bookcase.bedroom.FF:FF:FF:FF:FF:FF.1,0,1,1,1,1,1,0,1,1,0,1,0,1,1,1
+ |      |        |            |                       |
+协议   设备     设备        MAC地址                   数据
+名称   名称     位置
 
-HUB申请成功：
-THUB.mianban.badroom.ok.D
- |      |       |     | |
-协议 设备名称 设备位置 成 消息尾
-名称                 功
-
-释放总线：
-THUB.mianban.bedroom.fr.D
- |      |       |     | |
-协议 设备名称 设备位置 释 消息尾
-名称                 放
-
-总线空闲：
-THUB.hub.not.D
- |    |   |   |
-协议 设备 空闲 消息尾
-名称 名称
-```
----
-消息逻辑：
-```
-传感器：当总线空闲时输出
-if(总线空闲){
-  print(date);
-}
-
-用户输入：
-如果有改变 停止传感器输出
-if(数据改变){
-  申请暂停总线;
-  if(申请成功){
-    print(date);
-  }
-  释放总线;
-}
 ```
 ---
 文件夹说明：  
@@ -86,10 +53,10 @@ if(数据改变){
         |-- mianban //arduino主程序
         |   |-- mianban.ino
         |-- README.txt //串口数据定义
-    |-- arduino_shugui //使用arduino制作的书柜灯
-        |-- shugui //arduino主程序
-        |   |-- shugui.ino
-        |-- README.txt //串口数据定义
+    |-- ESP12-f_bookcase //使用ESP12-f制作的书架灯
+        |-- ESP12-f_bookcase //arduino主程序
+        |   |-- ESP12-f_bookcase.ino
+        |-- README.txt //MQTT数据定义
 |-- LICENSE
 |-- README.md
 ```
