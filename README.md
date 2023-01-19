@@ -7,6 +7,8 @@ Never use PCB files to make boards! (PCB are errors
 This is a THUB project with Arduino as its core. And completely open source, you can copy it at home!  
 这是一个THUB项目，核心使用ARDUINO。并且完全开源，你可以在家复刻他!
 ---
+此项目的提交记录和代码还有格式可能会很奇怪，因为本仓库的作者在编写、提交的同时，也在学习如何使用github
+---
 作者主页:[TNTInMinecraft](http://www.tntinminecraft.tech/)  
 Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 ---
