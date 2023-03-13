@@ -13,34 +13,8 @@ This is a THUB project with Arduino as its core. And completely open source, you
 Author URI:[TNTInMinecraft](http://www.tntinminecraft.tech/)
 ---
 从V0.2后，由曾经的使用串口协议传输数据改为使用MQTT协议传输数据，从此不用解决“忙线的问题”  
+从V0.1-next后，使用json传输数据，不再使用"THUB."格式  
 ---
-消息格式：   
-```
-上线：
-THUB.mianban.bedroom.FF:FF:FF:FF:FF:FF.noline
- |      |       |            |           |
-协议 设备名称 设备位置      MAC地址       上线
-名称
-
-设备输入：
-THUB.mianban.bedroom.FF:FF:FF:FF:FF:FF.qh.1
- |      |       |            |         | |
-协议 设备名称 设备位置      MAC地址      按 状
-名称                                   键 态
-
-传感器：
-THUB.tprhmt.bedroom.FF:FF:FF:FF:FF:FF.c.30
- |     |       |            |         |  |
-协议  设备    设备        MAC地址      单 数
-名称  名称    位置                     位 值
-
-复杂数据传输：
-THUB.bookcase.bedroom.FF:FF:FF:FF:FF:FF.1,0,1,1,1,1,1,0,1,1,0,1,0,1,1,1
- |      |        |            |                       |
-协议   设备     设备        MAC地址                   数据
-名称   名称     位置
-
-```
 ---
 文件夹说明：  
 ```
