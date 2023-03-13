@@ -18,32 +18,35 @@ String DeviceName = "bookcase";
 String Place = "bedroom";
 
 // 74hc595
-int BitPin = 12;   // Latch pin (STCP)
+int BitPin = 12;    // Latch pin (STCP)
 int ClockPin = 13;  // Clock pin (SHCP)
 int DataPin = 14;   // Data pin (DS)
 
 // WiFi
-const char *ssid = "***"; // WiFi name
-const char *password = "***";  // WiFi password
+const char *ssid = "MICHAEL";         // WiFi name
+const char *password = "1976021518";  // WiFi password
 
 // MQTT Broker
-const char *mqtt_broker = "***";
-const char *topic = "esp12-f";
+const char *mqtt_broker = "192.168.31.153";
+const char *topic = "esp8266";
 const char *mqtt_username = "";
 const char *mqtt_password = "";
 const int mqtt_port = 1883;
 
+// LED_bit
+int bit_data[16] = { 1 };
+
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-void setup() {
+void setup() {  
   // set out pin to 74hc595
   pinMode(BitPin, OUTPUT);
   pinMode(ClockPin, OUTPUT);
   pinMode(DataPin, OUTPUT);
 
   Serial.begin(115200);
-  
+
   // connecting to a WiFi network
   WiFi.begin(ssid, password);
   Serial.println("Connecting to WiFi.");
@@ -70,38 +73,81 @@ void setup() {
       delay(2000);
     }
   }
-  
+
+  // set client name
+  String UpData = "THUB." + DeviceName + "." + Place + String(WiFi.macAddress()) + ".online";
+  byte pubSiz = UpData.length() + 1;
+  char pubmsg[pubSiz];
+
   // publish and subscribe
-  client.publish(topic, "hello");
+  UpData.toCharArray(pubmsg, pubSiz);
+  client.publish(topic, pubmsg);
   client.subscribe(topic);
 }
 
 void callback(char *topic, byte *payload, unsigned int length) {
   String message;
+  String in_message[8] = { "" };
   Serial.print("Message arrived in topic: ");
   Serial.println(topic);
   Serial.print("Message:");
   for (int i = 0; i < length; i++) {
-    message = message + (char) payload[i];
+    message = message + (char)payload[i];
   }
   Serial.println(message);
-  light_control(message); // set light state
+  int j = 0;
+  for (int i = 0; i < message.length(); i++) {
+    if (message[i] == '.') {
+      j++;
+    } else {
+      in_message[j] = in_message[j] + char(message[i]);
+    }
+  }
+  if (in_message[0].compareTo("THUB") && in_message[1].compareTo(DeviceName) && in_message[2].compareTo(Place) && in_message[3].compareTo(WiFi.macAddress())) {
+    if (in_message[4] == "bit") {
+      cut_message(in_message[5]);  // cut message
+      light_control();
+    } else if (in_message[4] == "mode") {
+      light_control();
+    }
+  }
+  // debug
+  debug_LED();
   Serial.println("-----------------------");
 }
 
-void light_control(String message) {
-  // cut message
+void cut_message(String cut_message) {
   int j = 0;
-  int bit_data[16] = {1};
-  for (int i = 0; i < message.length(); i++) {
-    if (message[i] == ',') {
+  for (int i = 0; i < cut_message.length(); i++) {
+    if (cut_message[i] == ',') {
       j++;
     } else {
-      bit_data[j] = bit_data[j] * 10 + (message[i] - '0');
+      bit_data[j] = bit_data[j] * 10 + (cut_message[i] - '0');
     }
   }
-  message = "";
+  cut_message = "";
+}
 
+void modes(String in_mode) {
+  if (in_mode.compareTo("all_off")) {
+    for (int i = 0; i < 16; i++) {
+      bit_data[i] = 0;
+    }
+  } else if (in_mode.compareTo("all_on")) {
+    for (int i = 0; i < 16; i++) {
+      bit_data[i] = 1;
+    }
+  } else if (in_mode.compareTo("on_up")) {
+    for (int i = 0; i < 16; i++) {
+      bit_data[i] = 1;
+      i++;
+      bit_data[i] = 1;
+      delay(500);
+    }
+  }
+}
+
+void light_control() {
   // output light state
   digitalWrite(BitPin, LOW);
   for (int i = 15; i >= 0; i--) {
@@ -110,6 +156,14 @@ void light_control(String message) {
     digitalWrite(ClockPin, LOW);
   }
   digitalWrite(BitPin, HIGH);
+}
+
+void debug_LED(){
+  for (int i = 0; i <= 16; i++) {
+    Serial.print(bit_data[i]);
+    Serial.print(",");
+  }
+  Serial.println("");
 }
 
 void loop() {
