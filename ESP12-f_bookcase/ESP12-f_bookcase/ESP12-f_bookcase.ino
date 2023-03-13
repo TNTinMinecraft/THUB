@@ -23,8 +23,8 @@ int ClockPin = 13;  // Clock pin (SHCP)
 int DataPin = 14;   // Data pin (DS)
 
 // WiFi
-const char *ssid = "MICHAEL";         // WiFi name
-const char *password = "1976021518";  // WiFi password
+const char *ssid = "***";         // WiFi name
+const char *password = "***";  // WiFi password
 
 // MQTT Broker
 const char *mqtt_broker = "192.168.31.153";
